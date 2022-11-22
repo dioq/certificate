@@ -14,8 +14,8 @@ OU----部门（Organizational Unit Name） </br>
 CN----产品名（Common Name） </br>
 emailAddress----邮箱（Email Address）</br>
 openssl req -new -sha256 -key ca.key -out ca.csr -subj "/C=CN/ST=SD/L=JN/O=QDZY/OU=jobs8.cn/CN=CA/emailAddress=zhendong2011@live.cn" </br>
-### 3、自签署证书(有效期100年)
-openssl x509 -req -days 36500 -sha256 -extensions v3_ca -signkey ca.key -in ca.csr -out ca.cer </br>
+### 3、自签署证书(有效期10年)
+openssl x509 -req -days 3650 -sha256 -extensions v3_ca -signkey ca.key -in ca.csr -out ca.cer </br>
 
 
 ## 二、 生成服务器证书
@@ -24,7 +24,7 @@ openssl genrsa -aes256 -out server.key 2048
 ### 2、请求证书
 openssl req -new -sha256 -key server.key -out server.csr -subj "/C=CN/ST=SD/L=JN/O=QDZY/OU=jobs8.cn/CN=SERVER/emailAddress=zhendong2011@live.cn"
 ### 3、使用CA证书签署服务器证书
-openssl x509 -req -days 36500 -sha256 -extensions v3_req  -CA  ca.cer -CAkey ca.key  -CAserial ca.srl  -CAcreateserial -in server.csr -out server.cer
+openssl x509 -req -days 3650 -sha256 -extensions v3_req  -CA  ca.cer -CAkey ca.key  -CAserial ca.srl  -CAcreateserial -in server.csr -out server.cer
 
 
 ## 三、生成客户端证书
@@ -33,4 +33,4 @@ openssl genrsa -aes256 -out client.key 2048
 ### 2、申请证书
 openssl req -new -sha256 -key client.key  -out client.csr -subj "/C=CN/ST=SD/L=JN/O=QDZY/OU=jobs8.cn/CN=CLIENT/emailAddress=zhendong2011@live.cn"
 ### 3、使用CA证书签署客户端证书
-openssl x509 -req -days 36500 -sha256 -extensions v3_req  -CA  ca.cer -CAkey ca.key  -CAserial ca.srl  -CAcreateserial -in client.csr -out client.cer
+openssl x509 -req -days 3650 -sha256 -extensions v3_req  -CA  ca.cer -CAkey ca.key  -CAserial ca.srl  -CAcreateserial -in client.csr -out client.cer
