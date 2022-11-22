@@ -4,7 +4,7 @@ https证书厂商一般都会有一个根证书，这里模拟生成了https厂�
 ## 一、生成CA证书
 ### 1、创建CA证书私钥 </br>
 openssl genrsa -aes256 -out ca.key 2048 </br>
-### 2、请求证书
+### 2、根据私钥生成证书申请文件csr
 证数各参数含义如下: </br>
 C-----国家（Country Name）  </br>
 ST----省份（State or Province Name） </br>
@@ -14,7 +14,7 @@ OU----部门（Organizational Unit Name） </br>
 CN----产品名（Common Name） </br>
 emailAddress----邮箱（Email Address）</br>
 openssl req -new -sha256 -key ca.key -out ca.csr -subj "/C=CN/ST=SD/L=JN/O=QDZY/OU=jobs8.cn/CN=CA/emailAddress=zhendong2011@live.cn" </br>
-### 3、自签署证书
+### 3、自签署证书(有效期100年)
 openssl x509 -req -days 36500 -sha256 -extensions v3_ca -signkey ca.key -in ca.csr -out ca.cer </br>
 
 
