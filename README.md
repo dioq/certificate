@@ -34,3 +34,5 @@ openssl pkcs12 -clcerts -nokeys -in cert.p12 -out cert.pem           	  # 导出
 openssl rsa -in temp.key -out temp.pem                                  # key 转 pem   </br>
 openssl x509 -in tmp.crt -out tmp.pem                                   # crt 转 pem   </br>
 openssl x509 -outform der -in cert.pem -out cert.cer                    # pem 转 cer   </br>
+### java(包括Android)使用 jks 格式,用keytool将 cer 转成 jks
+keytool -import -alias mycert1 -file server.cer  -keystore server.jks
