@@ -36,7 +36,7 @@ openssl x509 -in tmp.crt -out tmp.pem                                   # crt �
 openssl x509 -outform der -in cert.pem -out cert.cer                    # pem 转 cer   </br>
 </br>
 </br>
-### Java    SSLPing时使用 jks 格式证书,  用keytool将 cer 转成 jks
+### Java    SSLPing时使用 jks 格式证书验证服务器传过来的证书的合法性,  用keytool将 cer 转成 jks
 keytool -import -alias mycert1 -file cert.cer  -keystore cert.jks
 ### Android SSLPing时使用 bks 格式证书,  用keytool将 cer 转成 bks
 keytool -importcert -v -trustcacerts -file cert.cer -keystore cert.bks -storetype BKS -providerclass org.bouncycastle.jce.provider.BouncyCastleProvider -providerpath bcprov-jdk15on-1.57.jar
