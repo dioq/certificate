@@ -38,5 +38,5 @@ openssl x509 -outform der -in cert.pem -out cert.cer                    # pem �
 </br>
 ### java 使用 jks 格式,用keytool将 cer 转成 jks
 keytool -import -alias mycert1 -file cert.cer  -keystore cert.jks
-### Android 使用 bks, 用keytool将 p12 转成 jks
+### Android 使用 bks, 用keytool将 cer 转成 bks
 keytool -importcert -v -trustcacerts -file cert.cer -keystore cert.bks -storetype BKS -providerclass org.bouncycastle.jce.provider.BouncyCastleProvider -providerpath bcprov-jdk15on-1.57.jar
