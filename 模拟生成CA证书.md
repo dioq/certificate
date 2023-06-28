@@ -42,9 +42,3 @@ input [client passwords]  </br>
 ### 3、使用CA证书签署客户端证书
 openssl x509 -req -days 3650 -sha256 -extensions v3_req  -CA  ca.cer -CAkey ca.key  -CAserial ca.srl  -CAcreateserial -in client.csr -out client.cer   </br>
 input [ca passwords]  </br>
-</br>
-cover p12      </br>
-openssl pkcs12 -export -inkey client.key -in client.cer -out client.p12    </br>
-input [client passwords]      </br>
-input [new passwords]         </br>
-input [new passwords]         </br>
