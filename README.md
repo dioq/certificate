@@ -27,6 +27,9 @@ X.509 PAM 编码(Base64)的后缀是: .PEM .CER .CRT    </br>
 ## 证书格式转换
 ### X.509 到 PKCS#12
 openssl pkcs12 -export -inkey private.key -in cert.cer -out cert.p12    </br>
+input [client passwords]              </br>
+input [new passwords]                 </br>
+input [new passwords]                 </br>
 ### PKCS#12 到 X.509
 openssl pkcs12 -nocerts -nodes 	-in cert.p12 -out private.key 			    # 导出私钥      </br>
 openssl pkcs12 -clcerts -nokeys -in cert.p12 -out cert.pem           	  # 导出数字证书   </br>
