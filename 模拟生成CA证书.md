@@ -27,7 +27,7 @@ input [server passwords]  </br>
 ### 2、根据私钥生成证书申请文件csr
 openssl req -new -sha256 -key server.key -out server.csr -subj "/C=CN/ST=SD/L=JN/O=QDZY/OU=Apple/CN=SERVER/emailAddress=zhendong2011@live.cn"    </br>
 input [server passwords]  </br>
-### 3、使用CA证书签署服务器证书
+### 3、使用CA证书签署服务器证书申请文件csr
 openssl x509 -req -days 3650 -sha256 -extensions v3_req  -CA  ca.cer -CAkey ca.key  -CAserial ca.srl  -CAcreateserial -in server.csr -out server.cer </br>
 input [ca passwords]  </br>
 
@@ -39,6 +39,6 @@ input [client passwords]  </br>
 ### 2、根据私钥生成证书申请文件csr
 openssl req -new -sha256 -key client.key  -out client.csr -subj "/C=CN/ST=SD/L=JN/O=QDZY/OU=Apple/CN=CLIENT/emailAddress=zhendong2011@live.cn"    </br>
 input [client passwords]  </br>
-### 3、使用CA证书签署客户端证书
+### 3、使用CA证书签署客户端证书申请文件csr
 openssl x509 -req -days 3650 -sha256 -extensions v3_req  -CA  ca.cer -CAkey ca.key  -CAserial ca.srl  -CAcreateserial -in client.csr -out client.cer   </br>
 input [ca passwords]  </br>
