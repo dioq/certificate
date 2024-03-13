@@ -1,4 +1,5 @@
 # certificate
+
 数字证书产生的目的是为了做 RSA 加解密里的 public key 的安全分发.        </br>
 数字证书组成部分: 公钥, 公钥描述信息, 签名信息         </br>
        签名信息: 消息摘要 被CA机构的私钥加密后的二进制数据              </br>
@@ -8,9 +9,10 @@
 安全原理: CA 私钥加密的内容只能由 CA 公钥解密, 如果CA私钥是安全的则由CA私钥加密的数字证书便是安全的.     </br>
 
 ## 证书及格式介绍
+
 PKCS 全称是 Public-Key Cryptography Standards ,是由 RSA 实验室与其它安全系统开发商为促进公钥密码的发展而制订的一系列标准,PKCS 目前共发布过 15 个标准。  </br>
 常用的有: </br>
-PKCS#7  Cryptographic Message Syntax Standard             	常用的后缀是: .P7B .P7C .SPC  </br>
+PKCS#7  Cryptographic Message Syntax Standard              常用的后缀是: .P7B .P7C .SPC  </br>
 PKCS#10 Certification Request Standard  </br>
 PKCS#12 Personal Information Exchange Syntax Standard       常用的后缀有: .P12 .PFX   </br>
 
@@ -25,21 +27,31 @@ X.509 PAM 编码(Base64)的后缀是: .PEM .CER .CRT    </br>
 .pfx .p12 文件是二进制格式,同时含私钥和证书,通常有保护密码   </br>
 
 ## 证书格式转换
+
 ### X.509 到 PKCS#12
+
 openssl pkcs12 -export -inkey private.key -in cert.cer -out cert.p12    </br>
 input [client passwords]              </br>
 input [new passwords]                 </br>
 input [new passwords]                 </br>
+
 ### PKCS#12 到 X.509
-openssl pkcs12 -nocerts -nodes 	-in cert.p12 -out private.key 			    # 导出私钥      </br>
-openssl pkcs12 -clcerts -nokeys -in cert.p12 -out cert.pem           	  # 导出数字证书   </br>
+
+openssl pkcs12 -nocerts -nodes  -in cert.p12 -out private.key        # 导出私钥      </br>
+openssl pkcs12 -clcerts -nokeys -in cert.p12 -out cert.pem              # 导出数字证书   </br>
+
 ### X.509 内部格式间转换
+
 openssl rsa -in temp.key -out temp.pem                                  # key 转 pem   </br>
 openssl x509 -in tmp.crt -out tmp.pem                                   # crt 转 pem   </br>
 openssl x509 -outform der -in cert.pem -out cert.cer                    # pem 转 cer   </br>
 </br>
 </br>
+
 ### Java    SSLPing时使用 jks 格式证书验证服务器传过来的证书的合法性,  用keytool将 cer 转成 jks
+
 keytool -import -alias mycert1 -file cert.cer  -keystore cert.jks
+
 ### Android SSLPing时使用 bks 格式证书验证服务器传过来的证书的合法性,  用keytool将 cer 转成 bks
+
 keytool -importcert -v -trustcacerts -file cert.cer -keystore cert.bks -storetype BKS -providerclass org.bouncycastle.jce.provider.BouncyCastleProvider -providerpath bcprov-jdk15on-1.57.jar

@@ -1,0 +1,43 @@
+keytool生成SSL自签名证书
+
+# 生成服务端密钥文件localhost.jks
+keytool -genkey -alias localhost -keyalg RSA -keysize 2048 -sigalg SHA256withRSA -keystore localhost.jks -dname CN=localhost,OU=Test,O=pkslow,L=Guangzhou,C=CN -validity 731 -storepass changeit -keypass changeit
+
+# 导出服务端的cert文件
+keytool -export -alias localhost -file localhost.cer -keystore localhost.jks
+
+# 生成客户端的密钥文件client.jks
+keytool -genkey -alias client -keyalg RSA -keysize 2048 -sigalg SHA256withRSA -keystore client.jks -dname CN=client,OU=Test,O=pkslow,L=Guangzhou,C=CN -validity 731 -storepass changeit -keypass changeit
+
+# 导出客户端的cert文件
+keytool -export -alias client -file client.cer -keystore client.jks
+
+# 把客户端的cert导入到服务端
+keytool -import -alias client -file client.cer -keystore localhost.jks
+
+# 把服务端的cert导入到客户端
+keytool -import -alias localhost -file localhost.cer -keystore client.jks
+
+# 检验服务端是否具有自己的private key和客户端的cert
+keytool -list -keystore localhost.jks
+
+# 转换JKS格式为P12  (经试验可以用 下面(# 1.)的方法代替这个)
+keytool -importkeystore -srckeystore client.jks -destkeystore client.p12 -srcstoretype JKS -deststoretype PKCS12 -srcstorepass changeit -deststorepass changeit -srckeypass changeit -destkeypass changeit -srcalias client -destalias client -noprompt
+
+密码统一为  changeit
+
+##################### 下面是证书格式转换
+
+# Android 端生成bks证书(jdk里要添加bcprov-jdk15on-168.jar并作其他设置)
+# 1. 先将 jks转换对应的p12证书
+keytool -importkeystore -srckeystore client.jks -destkeystore client2.p12 -srcstoretype jks -deststoretype pkcs12
+# 再将p12证书转换成bks证书 
+keytool -importkeystore -srckeystore client2.p12 -srcstoretype pkcs12 -destkeystore client.bks -deststoretype bks -provider org.bouncycastle.jce.provider.BouncyCastleProvider
+
+
+# 将bks转换成p12
+keytool -importkeystore -srckeystore client.bks -srcstoretype bks -destkeystore client3.p12 -deststoretype pkcs12 -provider org.bouncycastle.jce.provider.BouncyCastleProvider
+
+
+# 查看证书公钥
+keytool -list -rfc -keystore client.jks -storepass changeit

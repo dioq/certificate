@@ -1,0 +1,23 @@
+Letsencrypt 申请 SSL 官方证书
+
+清理之前的cerbot安装包
+sudo apt-get remove certbot
+
+安装certbot
+snap install --classic certbot
+
+创建/snap/bin/certbot的软链接,方便certbot命令的使用
+ln -s /snap/bin/certbot /usr/bin/certbot
+
+申请证书
+certbot certonly --nginx --email zhendong2011@live.cn -d jobs8.cn
+
+更新证书
+certbot renew
+
+
+申请成功保存位置
+Successfully received certificate.
+Certificate is saved at: /etc/letsencrypt/live/jobs8.cn/fullchain.pem
+Key is saved at:         /etc/letsencrypt/live/jobs8.cn/privkey.pem
+This certificate expires on 2024-03-19.
