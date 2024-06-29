@@ -1,10 +1,10 @@
 # 自签名CA根证书签名其他证书
 
-CA机构 会有一个根证书，这里模拟生成了CA机构的根证书
+CA机构 会有一个根证书,这里模拟生成了CA机构的根证书
 
 ## 一、生成CA证书
 
-### 1、创建CA证书私钥 </br>
+### 1、创建CA证书私钥
 
 openssl genrsa -aes256 -out ca.key 2048 </br>
 input [ca passwords]  </br>
@@ -19,7 +19,7 @@ O----公司（Organization Name） </br>
 OU----部门（Organizational Unit Name） </br>
 CN----产品名（Common Name） </br>
 emailAddress----邮箱（Email Address）</br>
-openssl req -new -sha256 -key ca.key -out ca.csr -subj "/C=CN/ST=SD/L=JN/O=QDZY/OU=Apple/CN=CA/emailAddress=<zhendong2011@live.cn>" </br>
+openssl req -new -sha256 -key ca.key -out ca.csr -subj "/C=CN/ST=SD/L=JN/O=QDZY/OU=Apple/CN=CA/emailAddress=example@gmail.com" </br>
 input [ca passwords]  </br>
 
 ### 3、自签署证书(有效期10年)
@@ -36,7 +36,7 @@ input [server passwords]  </br>
 
 ### 2、根据服务器私钥生成证书申请文件csr
 
-openssl req -new -sha256 -key server.key -out server.csr -subj "/C=CN/ST=SD/L=JN/O=QDZY/OU=Apple/CN=SERVER/emailAddress=<zhendong2011@live.cn>"    </br>
+openssl req -new -sha256 -key server.key -out server.csr -subj "/C=CN/ST=SD/L=JN/O=QDZY/OU=Apple/CN=SERVER/emailAddress=example@gmail.com"    </br>
 input [server passwords]  </br>
 
 ### 3、使用CA证书签署服务器证书申请文件csr
@@ -53,7 +53,7 @@ input [client passwords]  </br>
 
 ### 2、根据客户端私钥生成证书申请文件csr
 
-openssl req -new -sha256 -key client.key  -out client.csr -subj "/C=CN/ST=SD/L=JN/O=QDZY/OU=Apple/CN=CLIENT/emailAddress=<zhendong2011@live.cn>"    </br>
+openssl req -new -sha256 -key client.key  -out client.csr -subj "/C=CN/ST=SD/L=JN/O=QDZY/OU=Apple/CN=CLIENT/emailAddress=example@gmail.com"    </br>
 input [client passwords]  </br>
 
 ### 3、使用CA证书签署客户端证书申请文件csr

@@ -1,25 +1,25 @@
 OpenSSL生成SSL自签名证书
 
 说明:
-对于SSL单向认证：
-服务器需要CA证书、server证书、server私钥，客户端需要CA证。
-对于SSL双向认证：
-服务器需要CA证书、server证书、server私钥，客户端需要CA证书，client证书、client私钥。
+对于SSL单向认证:
+服务器需要CA证书、server证书、server私钥,客户端需要CA证。
+对于SSL双向认证:
+服务器需要CA证书、server证书、server私钥,客户端需要CA证书,client证书、client私钥。
 
 
 一、生成CA证书
 1、创建CA证书私钥
 openssl genrsa -aes256 -out ca.key 2048
 2、请求证书
-证数各参数含义如下：
-C-----国家（Country Name）
-ST----省份（State or Province Name）
-L----城市（Locality Name）
-O----公司（Organization Name）
-OU----部门（Organizational Unit Name）
-CN----产品名（Common Name）
-emailAddress----邮箱（Email Address）
-openssl req -new -sha256 -key ca.key -out ca.csr -subj "/C=CN/ST=SD/L=JN/O=QDZY/OU=Apple/CN=CA/emailAddress=zhendong2011@live.cn"
+证数各参数含义如下:
+C-----国家(Country Name)
+ST----省份(State or Province Name)
+L----城市(Locality Name)
+O----公司(Organization Name)
+OU----部门(Organizational Unit Name)
+CN----产品名(Common Name)
+emailAddress----邮箱(Email Address)
+openssl req -new -sha256 -key ca.key -out ca.csr -subj "/C=CN/ST=SD/L=JN/O=QDZY/OU=Apple/CN=CA/emailAddress=example@gmail.com"
 3、自签署证书
 openssl x509 -req -days 3650 -sha256 -extensions v3_ca -signkey ca.key -in ca.csr -out ca.cer
 
@@ -28,7 +28,7 @@ openssl x509 -req -days 3650 -sha256 -extensions v3_ca -signkey ca.key -in ca.cs
 1、创建服务器私钥
 openssl genrsa -aes256 -out server.key 2048
 2、请求证书
-openssl req -new -sha256 -key server.key -out server.csr -subj "/C=CN/ST=SD/L=JN/O=QDZY/OU=Apple/CN=SERVER/emailAddress=zhendong2011@live.cn"
+openssl req -new -sha256 -key server.key -out server.csr -subj "/C=CN/ST=SD/L=JN/O=QDZY/OU=Apple/CN=SERVER/emailAddress=example@gmail.com"
 3、使用CA证书签署服务器证书
 openssl x509 -req -days 3650 -sha256 -extensions v3_req  -CA  ca.cer -CAkey ca.key  -CAserial ca.srl  -CAcreateserial -in server.csr -out server.cer
 
@@ -37,20 +37,20 @@ openssl x509 -req -days 3650 -sha256 -extensions v3_req  -CA  ca.cer -CAkey ca.k
 1、生成客户端私钥
 openssl genrsa -aes256 -out client.key 2048
 2、申请证书
-openssl req -new -sha256 -key client.key  -out client.csr -subj "/C=CN/ST=SD/L=JN/O=QDZY/OU=Apple/CN=CLIENT/emailAddress=zhendong2011@live.cn"
+openssl req -new -sha256 -key client.key  -out client.csr -subj "/C=CN/ST=SD/L=JN/O=QDZY/OU=Apple/CN=CLIENT/emailAddress=example@gmail.com"
 3、使用CA证书签署客户端证书
 openssl x509 -req -days 3650 -sha256 -extensions v3_req  -CA  ca.cer -CAkey ca.key  -CAserial ca.srl  -CAcreateserial -in client.csr -out client.cer
 
 
 四、测试
-单向认证命令行：
-服务器：
+单向认证命令行:
+服务器:
 openssl s_server -CAfile ca.cer -cert server.cer -key server.key -accept 22580
-客户端：
+客户端:
 openssl s_client -CAfile ca.cer -cert client.cer -key client.key -connect 127.0.0.1:22580
 
-双向认证：
-服务器：
+双向认证:
+服务器:
 openssl s_server -CAfile ca.cer -cert server.cer -key server.key -accept 22580 -Verify 1
-客户端：
+客户端:
 openssl s_client -CAfile ca.cer -cert server.cer -key server.key -cert client.cer -key client.key -connect 127.0.0.1:22580

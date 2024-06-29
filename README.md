@@ -12,7 +12,7 @@
 
 PKCS 全称是 Public-Key Cryptography Standards ,是由 RSA 实验室与其它安全系统开发商为促进公钥密码的发展而制订的一系列标准,PKCS 目前共发布过 15 个标准。  </br>
 常用的有: </br>
-PKCS#7  Cryptographic Message Syntax Standard              常用的后缀是: .P7B .P7C .SPC  </br>
+PKCS#7  Cryptographic Message Syntax Standard               常用的后缀是: .P7B .P7C .SPC  </br>
 PKCS#10 Certification Request Standard  </br>
 PKCS#12 Personal Information Exchange Syntax Standard       常用的后缀有: .P12 .PFX   </br>
 
@@ -37,7 +37,7 @@ input [new passwords]                 </br>
 
 ### PKCS#12 到 X.509
 
-openssl pkcs12 -nocerts -nodes  -in cert.p12 -out private.key        # 导出私钥      </br>
+openssl pkcs12 -nocerts -nodes  -in cert.p12 -out private.key           # 导出私钥      </br>
 openssl pkcs12 -clcerts -nokeys -in cert.p12 -out cert.pem              # 导出数字证书   </br>
 
 ### X.509 内部格式间转换
@@ -45,8 +45,7 @@ openssl pkcs12 -clcerts -nokeys -in cert.p12 -out cert.pem              # 导出
 openssl rsa -in temp.key -out temp.pem                                  # key 转 pem   </br>
 openssl x509 -in tmp.crt -out tmp.pem                                   # crt 转 pem   </br>
 openssl x509 -outform der -in cert.pem -out cert.cer                    # pem 转 cer   </br>
-</br>
-</br>
+openssl x509 -inform der -in test.cer -out test.pem                     # cer 转 pem   </br>
 
 ### Java    SSLPing时使用 jks 格式证书验证服务器传过来的证书的合法性,  用keytool将 cer 转成 jks
 

@@ -2,7 +2,7 @@
 
 自签名证书,能模拟 CA 根证书
 
-## 1、创建根证书私钥 </br>
+## 1、创建根证书私钥
 
 openssl genrsa -aes256 -out ca.key 2048 </br>
 input [ca passwords]  </br>
@@ -17,7 +17,7 @@ O----公司（Organization Name） </br>
 OU----部门（Organizational Unit Name） </br>
 CN----产品名（Common Name） </br>
 emailAddress----邮箱（Email Address）</br>
-openssl req -new -sha256 -key ca.key -out ca.csr -subj "/C=CN/ST=SD/L=JN/O=QDZY/OU=Apple/CN=CA/emailAddress=zhendong2011@live.cn" </br>
+openssl req -new -sha256 -key ca.key -out ca.csr -subj "/C=CN/ST=SD/L=JN/O=QDZY/OU=Apple/CN=CA/emailAddress=example@gmail.com" </br>
 input [ca passwords]  </br>
 
 ## 3、自签署证书(有效期10年)
