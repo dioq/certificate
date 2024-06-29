@@ -47,6 +47,10 @@ openssl x509 -in tmp.crt -out tmp.pem                                   # crt �
 openssl x509 -outform der -in cert.pem -out cert.cer                    # pem 转 cer   </br>
 openssl x509 -inform der -in test.cer -out test.pem                     # cer 转 pem   </br>
 
+## 读取证书信息
+
+openssl x509 -inform DER -noout -text -in cert.cer
+
 ### Java    SSLPing时使用 jks 格式证书验证服务器传过来的证书的合法性,  用keytool将 cer 转成 jks
 
 keytool -import -alias mycert1 -file cert.cer  -keystore cert.jks
